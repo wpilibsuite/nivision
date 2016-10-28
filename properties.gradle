@@ -15,7 +15,7 @@ ext.includeJavaSources = true
 ext.includeJavaJavadoc = true
 
 // Set to true to include the cpp sources in the user zip (does not include the driver sources)
-ext.includeCppSources = false
+ext.includeCppSources = true
 
 // Set to true to include the driver sources in the user zip
-ext.includeDriverSources = false
+ext.includeDriverSources = true
