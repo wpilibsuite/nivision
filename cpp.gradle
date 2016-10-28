@@ -1,0 +1,94 @@
+defineWpiUtilProperties()
+defineHALProperties()
+defineNetworkTablesProperties()
+defineWpiLibProperties()
+
+def cppSetupModel = { project ->
+    project.model {
+        components {
+            niVisionWPI(NativeLibrarySpec) {
+                targetPlatform 'arm'
+                setupDefines(project, binaries)
+
+                binaries.all {
+                    tasks.withType(CppCompile) {
+                        addUserLinks(linker, targetPlatform, false)
+                        addHalLibraryLinks(it, linker, targetPlatform)
+                        addWpiUtilLibraryLinks(it, linker, targetPlatform)
+                        addNetworkTablesLibraryLinks(it, linker, targetPlatform)
+                        addWpilibLibraryLinks(it, linker, targetPlatform)
+                    }
+                }
+
+                sources {
+                    cpp {
+                        source {
+                            srcDirs = [cppSrc, cppLibrarySrc]
+                            includes = ["**/*.cpp"]
+                        }
+                        exportedHeaders {
+                            srcDirs = [cppInclude, driverLibraryInclude, cppLibraryInclude, wpilibInclude, halInclude, wpiUtilInclude, netTablesInclude]
+                            includes = ['**/*.h']
+                        }
+                        if (useDriver) {
+                            lib project: ':arm:driver', library: 'niVisionWPIDriver', linkage: 'static'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+ext.mergeStaticSetup = { pjt ->
+    if (combineStaticLibs && useDriver) {
+        pjt.tasks.whenObjectAdded { task ->
+            def name = task.name.toLowerCase()
+            if (name.contains('create') && name.contains('staticlibrary')) {
+                def libraryPath = task.outputFile.parent
+                def library = file(task.outputFile.absolutePath)
+                project(':arm:driver').model {
+                    binaries {
+                        withType(StaticLibraryBinarySpec) { binary ->
+                            ext.driverLibrary = new File(binary.staticLibraryFile.absolutePath)
+                        }
+                    }
+                }
+                task.doLast {
+                    library.renameTo(file("${library}.m"))
+                    copy {
+                        from driverLibrary
+                        into libraryPath
+                    }
+                    
+                    ByteArrayOutputStream mriFile = new ByteArrayOutputStream()
+                    //def mriFile = new File("${libraryPath}/lib${libraryName}.mri")
+                    mriFile << "create lib${libraryName}.a\n"
+                    mriFile << "addlib lib${libraryName}.a.m\n"
+                    mriFile << "addlib lib${libraryName}Driver.a\n"
+                    mriFile << "save\n"
+                    mriFile << "end\n"
+                    
+                    def stdIn = new ByteArrayInputStream(mriFile.buf)
+                    
+                    exec {
+                        standardInput = stdIn
+                        workingDir = libraryPath
+                        commandLine "${compilerPrefixToUse}ar", '-M'
+                    }
+                }
+            }
+        }
+    }
+}
+
+project(':arm:cpp') {
+    apply plugin: 'cpp'
+
+    apply from: "${rootDir}/toolchains/arm.gradle"
+
+    cppSetupModel(project)
+    
+    project.debugStripSetup()
+    mergeStaticSetup(project)
+}
