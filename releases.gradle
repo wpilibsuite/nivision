@@ -249,7 +249,7 @@ task cppSources(type: Zip) {
     group = 'WPILib'
     destinationDir = releaseDir
     baseName = libraryName
-    classifier = 'driversources'
+    classifier = 'cppsources'
     duplicatesStrategy = 'exclude'
     
     from(cppSrc) {
@@ -269,13 +269,11 @@ project(':arm:cpp').tasks.whenTaskAdded { task ->
     }
 }
 
-if (useDriver) {
-    project(':arm:driver').tasks.whenTaskAdded { task ->
-        def name = task.name.toLowerCase()
-        if (name.contains("sharedlibrary") || name.contains("staticlibrary")) {
-            userSharedZip.dependsOn task
-            userStaticZip.dependsOn task
-        }
+project(':arm:java').tasks.whenTaskAdded { task ->
+    def name = task.name.toLowerCase()
+    if (name.contains("sharedlibrary") || name.contains("staticlibrary")) {
+        userSharedZip.dependsOn task
+        userStaticZip.dependsOn task
     }
 }
 
