@@ -21,6 +21,8 @@ def cppSetupModel = { project ->
                         addWpiUtilLibraryLinks(it, linker, targetPlatform)
                     }
                 }
+                
+                project.setupJniIncludes(binaries)
 
                 sources {
                     cpp {
@@ -134,12 +136,14 @@ ext.setupJniIncludes = { binaries ->
         tasks.withType(CppCompile) {
             cppCompiler.args '-I', file("${rootDir}/java/arm-linux").absolutePath
             cppCompiler.args '-I', file("${rootDir}/java/arm-linux/linux").absolutePath
+            
+            dependsOn jniHeaders
 
             jniHeaders.outputs.files.each { file ->
                 cppCompiler.args '-I', file.getPath()
             }
 
-            dependsOn jniHeaders
+
         }
     }
 }
@@ -151,6 +155,5 @@ ext.setupJniIncludes = { binaries ->
     cppSetupModel(project)
     
     project.debugStripSetup()
-
 
 }

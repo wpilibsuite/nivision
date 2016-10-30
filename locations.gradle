@@ -25,7 +25,7 @@ ext.javaSrc = "${rootDir}/java/src"
 ext.javaLibraryLoc = "${rootDir}/libraries/java"
 
 // Locations for the JNI java files to generate headers from
-ext.jniDefinitions = ['com.ni.vision.niVisionWPIJNI']
+ext.jniDefinitions = ['com.ni.vision.NIVision']
 
 // Location for user provided java library source code if it is not already in a jar
 ext.userJavaSrc = "${rootDir}/libraries/java/src"
