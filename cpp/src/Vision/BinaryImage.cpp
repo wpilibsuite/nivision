@@ -11,6 +11,8 @@
 
 #include "WPIErrors.h"
 
+namespace frc {
+
 /**
  * Get then number of particles for the image.
  *
@@ -240,3 +242,4 @@ BinaryImage* BinaryImage::ParticleFilter(ParticleFilterCriteria2* criteria,
   wpi_setImaqErrorWithContext(success, "Error in particle filter operation");
   return result;
 }
+}  // namespace frc

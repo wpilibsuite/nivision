@@ -18,6 +18,8 @@
 #include "Utility.h"
 #include "WPIErrors.h"
 
+namespace frc {
+
 constexpr uint8_t CameraServer::kMagicNumber[];
 
 CameraServer* CameraServer::GetInstance() {
@@ -276,3 +278,4 @@ void CameraServer::Serve() {
   }
   close(sock);
 }
+}  // namespace frc

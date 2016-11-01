@@ -359,15 +359,14 @@ project(':arm:cpp').tasks.whenTaskAdded { task ->
     }
 }
 
-if (useDriver) {
-    project(':arm:driver').tasks.whenTaskAdded { task ->
-        def name = task.name.toLowerCase()
-        if (name.contains("sharedlibrary") || name.contains("staticlibrary")) {
-            userSharedZip.dependsOn task
-            userStaticZip.dependsOn task
-        }
+project(':arm:java').tasks.whenTaskAdded { task ->
+    def name = task.name.toLowerCase()
+    if (name.contains("sharedlibrary") || name.contains("staticlibrary")) {
+        userSharedZip.dependsOn task
+        userStaticZip.dependsOn task
     }
 }
+
 
 build.dependsOn javaSourceJar
 build.dependsOn javaJavadocJar

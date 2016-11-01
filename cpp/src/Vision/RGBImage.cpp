@@ -7,6 +7,8 @@
 
 #include "Vision/RGBImage.h"
 
+namespace frc {
+
 /**
  * Create a new image that uses Red, Green, and Blue planes.
  */
@@ -21,3 +23,4 @@ RGBImage::RGBImage(const char* fileName) : ColorImage(IMAQ_IMAGE_RGB) {
   int success = imaqReadFile(m_imaqImage, fileName, nullptr, nullptr);
   wpi_setImaqErrorWithContext(success, "Imaq ReadFile error");
 }
+}  // namespace frc

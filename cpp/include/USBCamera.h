@@ -14,6 +14,8 @@
 #include "NIIMAQdx.h"
 #include "nivision.h"
 
+namespace frc {
+
 typedef enum whiteBalance_enum {
   kFixedIndoor = 3000,
   kFixedOutdoor1 = 4000,
@@ -22,7 +24,7 @@ typedef enum whiteBalance_enum {
   kFixedFlourescent2 = 5200
 } whiteBalance;
 
-class USBCamera : public ErrorBase {
+class USBCamera : public frc::ErrorBase {
  private:
   static constexpr char const* ATTR_WB_MODE =
       "CameraAttributes::WhiteBalance::Mode";
@@ -120,3 +122,4 @@ class USBCamera : public ErrorBase {
   void GetImage(Image* image);
   int GetImageData(void* buffer, int bufferSize);
 };
+}  // namespace frc
