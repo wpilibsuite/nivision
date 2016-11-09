@@ -9,6 +9,8 @@
 
 #include "nivision.h"
 
+namespace frc {
+
 MonoImage::MonoImage() : ImageBase(IMAQ_IMAGE_U8) {}
 
 /**
@@ -46,3 +48,4 @@ std::vector<EllipseMatch>* MonoImage::DetectEllipses(
       DetectEllipses(ellipseDescriptor, nullptr, nullptr, nullptr);
   return ellipses;
 }
+}  // namespace frc

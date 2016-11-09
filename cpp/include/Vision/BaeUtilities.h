@@ -11,6 +11,8 @@
 
 #include <string>
 
+namespace frc {
+
 /*  Constants */
 #define LOG_DEBUG __FILE__, __FUNCTION__, __LINE__, DEBUG_TYPE
 #define LOG_INFO __FILE__, __FUNCTION__, __LINE__, INFO_TYPE
@@ -69,3 +71,4 @@ void panForTarget(Servo* panServo, double sinStart);
 int processFile(char* inputFile, char* outputString, int lineNumber);
 int emptyString(char* string);
 void stripString(char* string);
+}  // namespace frc

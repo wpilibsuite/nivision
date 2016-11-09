@@ -10,6 +10,8 @@
 #include "ErrorBase.h"
 #include "nivision.h"
 
+namespace frc {
+
 #define DEFAULT_BORDER_SIZE 3
 
 class ImageBase : public ErrorBase {
@@ -24,3 +26,4 @@ class ImageBase : public ErrorBase {
  protected:
   Image* m_imaqImage;
 };
+}  // namespace frc

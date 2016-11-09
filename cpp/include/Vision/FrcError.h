@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+namespace frc {
+
 /* Error Codes */
 #define ERR_VISION_GENERAL_ERROR 166000  //
 #define ERR_COLOR_NOT_FOUND 166100       // TrackAPI.cpp
@@ -30,3 +32,4 @@
 /* error handling functions */
 int GetLastVisionError();
 const char* GetVisionErrorText(int errorCode);
+}  // namespace frc
