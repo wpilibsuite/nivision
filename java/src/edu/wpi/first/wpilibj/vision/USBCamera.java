@@ -144,10 +144,10 @@ public class USBCamera {
       if (!matcher.matches()) {
         continue;
       }
-      if (Integer.parseInt(matcher.group("m_width")) != m_width) {
+      if (Integer.parseInt(matcher.group("width")) != m_width) {
         continue;
       }
-      if (Integer.parseInt(matcher.group("m_height")) != m_height) {
+      if (Integer.parseInt(matcher.group("height")) != m_height) {
         continue;
       }
       double fps = Double.parseDouble(matcher.group("fps"));
