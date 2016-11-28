@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "USBCamera.h"
+#include "Vision/USBCamera.h"
 
 #include <chrono>
 #include <cstdlib>
@@ -17,7 +17,7 @@
 
 #include "Utility.h"
 
-namespace frc {
+namespace nivision {
 
 // This macro expands the given imaq function to ensure that it is called and
 // properly checked for an error, calling the wpi_setImaqErrorWithContext
@@ -334,4 +334,4 @@ int USBCamera::GetImageData(void* buffer, int bufferSize) {
                  IMAQdxBufferNumberModeLast, 0, &bufNum);
   return GetJpegSize(buffer, bufferSize);
 }
-}  // namespace frc
+}  // namespace nivision

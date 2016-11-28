@@ -12,6 +12,10 @@
 #include <string>
 
 namespace frc {
+class Servo;
+}  // namespace frc
+
+namespace nivision {
 
 /*  Constants */
 #define LOG_DEBUG __FILE__, __FUNCTION__, __LINE__, DEBUG_TYPE
@@ -60,15 +64,14 @@ void ShowActivity(char* fmt, ...);
 double ElapsedTime(double startTime);
 
 /* servo panning utilities */
-class Servo;
 double SinPosition(double* period, double sinStart);
 void panInit();
 void panInit(double period);
-void panForTarget(Servo* panServo);
-void panForTarget(Servo* panServo, double sinStart);
+void panForTarget(frc::Servo* panServo);
+void panForTarget(frc::Servo* panServo, double sinStart);
 
 /* config file read utilities */
 int processFile(char* inputFile, char* outputString, int lineNumber);
 int emptyString(char* string);
 void stripString(char* string);
-}  // namespace frc
+}  // namespace nivision

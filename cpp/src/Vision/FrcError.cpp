@@ -7,9 +7,9 @@
 
 #include "Vision/FrcError.h"
 
-#include "nivision.h"
+#include "Vision/nivision.h"
 
-namespace frc {
+namespace nivision {
 
 /**
  * Get the error code returned from the NI Vision library
@@ -2402,4 +2402,4 @@ const char* GetVisionErrorText(int errorCode) {
 
   return errorText;
 }  // NOLINT
-}  // namespace frc
+}  // namespace nivision

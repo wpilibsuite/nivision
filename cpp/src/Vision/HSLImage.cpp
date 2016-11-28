@@ -7,7 +7,7 @@
 
 #include "Vision/HSLImage.h"
 
-namespace frc {
+namespace nivision {
 
 /**
  * Create a new image that uses the Hue, Saturation, and Luminance planes.
@@ -23,4 +23,4 @@ HSLImage::HSLImage(const char* fileName) : ColorImage(IMAQ_IMAGE_HSL) {
   int success = imaqReadFile(m_imaqImage, fileName, nullptr, nullptr);
   wpi_setImaqErrorWithContext(success, "Imaq ReadFile error");
 }
-}  // namespace frc
+}  // namespace nivision

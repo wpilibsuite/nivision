@@ -18,7 +18,7 @@
  */
 #include "Vision/VisionAPI.h"
 
-namespace frc {
+namespace nivision {
 
 class BinaryImage : public MonoImage {
  public:
@@ -44,4 +44,4 @@ class BinaryImage : public MonoImage {
   static bool CompareParticleSizes(ParticleAnalysisReport particle1,
                                    ParticleAnalysisReport particle2);
 };
-}  // namespace frc
+}  // namespace nivision

@@ -21,7 +21,9 @@
 #include "Timer.h"
 #include "WPIErrors.h"
 
-namespace frc {
+using namespace frc;
+
+namespace nivision {
 
 static const int kMaxPacketSize = 1536;
 static const int kImageBufferAllocationIncrement = 1000;
@@ -618,4 +620,4 @@ int AxisCamera::CreateCameraSocket(std::string const& requestString,
 
   return camSocket;
 }
-}  // namespace frc
+}  // namespace nivision

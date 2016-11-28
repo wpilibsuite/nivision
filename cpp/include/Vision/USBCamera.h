@@ -14,7 +14,7 @@
 #include "NIIMAQdx.h"
 #include "nivision.h"
 
-namespace frc {
+namespace nivision {
 
 typedef enum whiteBalance_enum {
   kFixedIndoor = 3000,
@@ -122,4 +122,4 @@ class USBCamera : public frc::ErrorBase {
   void GetImage(Image* image);
   int GetImageData(void* buffer, int bufferSize);
 };
-}  // namespace frc
+}  // namespace nivision

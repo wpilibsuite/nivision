@@ -12,7 +12,7 @@
 #include "Vision/BaeUtilities.h"
 #include "Vision/FrcError.h"
 
-namespace frc {
+namespace nivision {
 
 int VisionAPI_debugFlag = 1;
 #define DPRINTF \
@@ -829,4 +829,4 @@ int frcExtractHuePlane(const Image* image, Image* huePlane) {
 int frcExtractHuePlane(const Image* image, Image* huePlane, int minSaturation) {
   return frcExtractColorPlanes(image, IMAQ_HSL, huePlane, nullptr, nullptr);
 }
-}  // namespace frc
+}  // namespace nivision

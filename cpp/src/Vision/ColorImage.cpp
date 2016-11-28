@@ -9,7 +9,7 @@
 
 #include "WPIErrors.h"
 
-namespace frc {
+namespace nivision {
 
 ColorImage::ColorImage(ImageType type) : ImageBase(type) {}
 
@@ -486,4 +486,4 @@ void ColorImage::Equalize(bool allPlanes) {
 void ColorImage::ColorEqualize() { Equalize(true); }
 
 void ColorImage::LuminanceEqualize() { Equalize(false); }
-}  // namespace frc
+}  // namespace nivision

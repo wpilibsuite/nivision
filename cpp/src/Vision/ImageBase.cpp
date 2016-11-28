@@ -7,9 +7,9 @@
 
 #include "Vision/ImageBase.h"
 
-#include "nivision.h"
+#include "Vision/nivision.h"
 
-namespace frc {
+namespace nivision {
 
 /**
  * Create a new instance of an ImageBase.
@@ -70,4 +70,4 @@ int ImageBase::GetWidth() {
  * @return A pointer to the internal IMAQ Image data structure.
  */
 Image* ImageBase::GetImaqImage() { return m_imaqImage; }
-}  // namespace frc
+}  // namespace nivision

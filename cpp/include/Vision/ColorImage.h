@@ -11,7 +11,7 @@
 #include "ImageBase.h"
 #include "Threshold.h"
 
-namespace frc {
+namespace nivision {
 
 class ColorImage : public ImageBase {
  public:
@@ -71,4 +71,4 @@ class ColorImage : public ImageBase {
   void ReplaceSecondColorPlane(ColorMode mode, MonoImage* plane);
   void ReplaceThirdColorPlane(ColorMode mode, MonoImage* plane);
 };
-}  // namespace frc
+}  // namespace nivision

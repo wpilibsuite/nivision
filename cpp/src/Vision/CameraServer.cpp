@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "CameraServer.h"
+#include "Vision/CameraServer.h"
 
 #include <netdb.h>
 #include <sys/socket.h>
@@ -18,7 +18,9 @@
 #include "Utility.h"
 #include "WPIErrors.h"
 
-namespace frc {
+using namespace frc;
+
+namespace nivision {
 
 constexpr uint8_t CameraServer::kMagicNumber[];
 
@@ -278,4 +280,4 @@ void CameraServer::Serve() {
   }
   close(sock);
 }
-}  // namespace frc
+}  // namespace nivision

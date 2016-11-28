@@ -17,7 +17,7 @@
 #include "Vision/HSLImage.h"
 #include "nivision.h"
 
-namespace frc {
+namespace nivision {
 
 /**
  * Axis M1011 network camera
@@ -123,4 +123,4 @@ class AxisCamera : public frc::ErrorBase {
 
   int CreateCameraSocket(std::string const& requestString, bool setError);
 };
-}  // namespace frc
+}  // namespace nivision

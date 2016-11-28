@@ -7,7 +7,7 @@
 
 #include "Vision/Threshold.h"
 
-namespace frc {
+namespace nivision {
 
 Threshold::Threshold(int new_plane1Low, int new_plane1High, int new_plane2Low,
                      int new_plane2High, int new_plane3Low,
@@ -19,4 +19,4 @@ Threshold::Threshold(int new_plane1Low, int new_plane1High, int new_plane2Low,
   plane3Low = new_plane3Low;
   plane3High = new_plane3High;
 }
-}  // namespace frc
+}  // namespace nivision

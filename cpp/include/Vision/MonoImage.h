@@ -11,7 +11,7 @@
 
 #include "ImageBase.h"
 
-namespace frc {
+namespace nivision {
 
 class MonoImage : public ImageBase {
  public:
@@ -24,4 +24,4 @@ class MonoImage : public ImageBase {
   std::vector<EllipseMatch>* DetectEllipses(
       EllipseDescriptor* ellipseDescriptor);
 };
-}  // namespace frc
+}  // namespace nivision

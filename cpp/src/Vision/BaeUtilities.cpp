@@ -21,7 +21,9 @@
 #include "Servo.h"
 #include "Timer.h"
 
-namespace frc {
+using namespace frc;
+
+namespace nivision {
 
 /** @file
  *   Utility functions
@@ -380,4 +382,4 @@ void stripString(char* string) {
   }
   string[j] = '\0';
 }
-}  // namespace frc
+}  // namespace nivision

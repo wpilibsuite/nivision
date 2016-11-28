@@ -9,7 +9,7 @@
 
 #include <stdint.h>
 
-namespace frc {
+namespace nivision {
 
 /* Error Codes */
 #define ERR_VISION_GENERAL_ERROR 166000  //
@@ -32,4 +32,4 @@ namespace frc {
 /* error handling functions */
 int GetLastVisionError();
 const char* GetVisionErrorText(int errorCode);
-}  // namespace frc
+}  // namespace nivision

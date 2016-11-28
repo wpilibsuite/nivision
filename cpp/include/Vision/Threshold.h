@@ -9,7 +9,7 @@
 
 #include <stdint.h>
 
-namespace frc {
+namespace nivision {
 
 /**
  * Color threshold values.
@@ -28,4 +28,4 @@ class Threshold {
   Threshold(int plane1Low, int plane1High, int plane2Low, int plane2High,
             int plane3Low, int plane3High);
 };
-}  // namespace frc
+}  // namespace nivision

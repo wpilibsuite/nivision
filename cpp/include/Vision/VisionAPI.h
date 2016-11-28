@@ -11,7 +11,7 @@
 
 #include "nivision.h"
 
-namespace frc {
+namespace nivision {
 
 /* Constants */
 
@@ -176,4 +176,4 @@ int frcExtractColorPlanes(const Image* image, ColorMode mode, Image* plane1,
                           Image* plane2, Image* plane3);
 int frcExtractHuePlane(const Image* image, Image* huePlane);
 int frcExtractHuePlane(const Image* image, Image* huePlane, int minSaturation);
-}  // namespace frc
+}  // namespace nivision
