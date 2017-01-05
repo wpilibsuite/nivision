@@ -23,6 +23,7 @@ def cppSetupModel = { project ->
                 }
                 
                 project.setupJniIncludes(binaries)
+                project.checkNativeSymbols(project.getNativeJNISymbols)
 
                 sources {
                     cpp {
@@ -108,6 +109,27 @@ task jniHeaders {
             args jniDefinitions
         }
     }
+}
+
+ext.getNativeJNISymbols = {
+    def symbolsList = []
+
+    jniHeaders.outputs.files.each {
+        FileTree tree = fileTree(dir: it)
+        tree.each { File file ->
+            file.eachLine { line ->
+                if (line.trim()) {
+                    if (line.startsWith("JNIEXPORT ") && line.contains('JNICALL')) {
+                        def (p1, p2) = line.split('JNICALL').collect { it.trim() }
+                        // p2 is our JNI call
+                        symbolsList << p2
+                    }
+                }
+            }
+        }
+    }
+
+    return symbolsList
 }
 
 clean {
