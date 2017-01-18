@@ -222,3 +222,8 @@ gradle-app.setting
 
 #VSCode
 .vscode/
+
+setup/
+temp/
+
+!buildInstaller.ps1

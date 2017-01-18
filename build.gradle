@@ -2,7 +2,7 @@ import org.gradle.internal.os.OperatingSystem
 
 plugins {
     id 'net.ltgt.errorprone' version '0.0.8'
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '1.4'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '1.6'
 }
 
 allprojects {
@@ -11,9 +11,13 @@ allprojects {
     }
 }
 
-ext.useDriver = false
+if (!hasProperty('releaseType')) {
+    WPILibVersion {
+        releaseType = 'official'
+    }
+}
 
-ext.compilerPrefixToUse = project.hasProperty('compilerPrefix') ? project.compilerPrefix : 'arm-frc-linux-gnueabi-'
+ext.useDriver = false
 
 ext.setupDefines = { project, binaries ->
     binaries.all {
@@ -26,48 +30,6 @@ ext.setupDefines = { project, binaries ->
 }
 
 apply from: "locations.gradle"
-
-ext.addUserLinks = { linker, targetPlatform, implLib ->
-    def libPattern = /.*((\\/|\\).*)+lib(?<libName>.+).(.+)$/
-    def libraryArgs = []
-    def libraryPath = file(driverLibraryLib).path
-
-    // adds all libraries found in the driver folder
-    def libraryTree = fileTree(libraryPath)
-    libraryTree.include '*.so'
-    libraryTree.include '*.a'
-
-    libraryTree.each { lib ->
-        def nameMatcher = (lib.path =~ libPattern)
-        if (nameMatcher[0].size() > 1) {
-            def name = nameMatcher.group('libName')
-            libraryArgs << '-l' + name
-        }
-    }
-    
-    if (implLib) {
-        // adds all libraries found in the impl folder
-        def implLibraryPath = file(cppLibraryLib).path
-        def implLibraryTree = fileTree(implLibraryPath)
-        implLibraryTree.include '*.so'
-        implLibraryTree.include '*.a'
-
-        implLibraryTree.each { lib ->
-            def nameMatcher = (lib.path =~ libPattern)
-            if (nameMatcher[0].size() > 1) {
-                def name = nameMatcher.group('libName')
-                libraryArgs << '-l' + name
-            }
-        }
-    }
-     
-    // Add all arguments
-    String architecture = targetPlatform.architecture
-    if (architecture.contains('arm')){
-        linker.args << '-L' + libraryPath
-        linker.args.addAll(libraryArgs)
-    }
-}
 
 apply from: "properties.gradle"
 
@@ -83,6 +45,8 @@ task build
 
 apply from: "releases.gradle"
 
+apply from: "installer.gradle"
+
 task clean(type: Delete) {
     description = "Deletes the build directory"
     group = "Build"
@@ -91,6 +55,7 @@ task clean(type: Delete) {
 
 clean {
     delete releaseDir
+    delete setupDir
 }
 
 task wrapper(type: Wrapper) {

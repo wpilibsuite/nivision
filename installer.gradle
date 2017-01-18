@@ -1,33 +1,9 @@
-task javaSourceJar(type: Jar) {
-    description = 'Generates the source jar for java'
-    group = 'WPILib'
-    baseName = libraryName
-    classifier = "sources"
-    duplicatesStrategy = 'exclude'
-    destinationDir = releaseDir
+ext.setupDir = file("${rootDir}/setup")
 
-    dependsOn project(':arm:java').classes
-    from project(':arm:java').sourceSets.main.allJava
-}
-
-task javaJavadocJar(type: Jar) {
-    description = 'Generates the javadoc jar for java'
-    group = 'WPILib'
-    baseName = libraryName
-    classifier = "javadoc"
-    duplicatesStrategy = 'exclude'
-    destinationDir = releaseDir
-    
-    dependsOn project(':arm:java').javadoc
-    from project(':arm:java').javadoc.destinationDir
-}
-
-task userStaticZip(type: Zip) {
+task copyForSetup(type: Copy) {
     description = 'Creates user zip of libraries, with static c++ libs.'
     group = 'WPILib'
-    destinationDir = releaseDir
-    baseName = libraryName
-    classifier = 'user'
+    destinationDir = setupDir
     duplicatesStrategy = 'exclude'
     
     // Copy include files from cpp project
@@ -159,67 +135,51 @@ task userStaticZip(type: Zip) {
             into "/cpp/src/$libraryName"
         }
     }
-
-    from(file("${rootDir}/examples")) {
-        into '/examples'
-    }
-}
-
-task cppSources(type: Zip) {
-    description = 'Creates a zip of cpp sources.'
-    group = 'WPILib'
-    destinationDir = releaseDir
-    baseName = libraryName
-    classifier = 'cppsources'
-    duplicatesStrategy = 'exclude'
-    
-    from(cppSrc) {
-        into 'src'
-    }
-
-    from(cppInclude) {
-        into 'include'
-    }
-}
-
-if (useDriver) {
-    task driverSources(type: Zip) {
-        description = 'Creates a zip of driver sources.'
-        group = 'WPILib'
-        destinationDir = releaseDir
-        baseName = libraryName
-        classifier = 'driversources'
-        duplicatesStrategy = 'exclude'
-        
-        from(driverSrc) {
-            into 'src'
-        }
-
-        from(driverInclude) {
-            into 'include'
-        }
-    }
 }
 
 project(':arm:cpp').tasks.whenTaskAdded { task ->
     def name = task.name.toLowerCase()
     if (name.contains("sharedlibrary") || name.contains("staticlibrary")) {
-        userStaticZip.dependsOn task
+        copyForSetup.dependsOn task
     }
 }
 
 project(':arm:java').tasks.whenTaskAdded { task ->
     def name = task.name.toLowerCase()
     if (name.contains("sharedlibrary") || name.contains("staticlibrary")) {
-        userStaticZip.dependsOn task
+        copyForSetup.dependsOn task
     }
 }
 
+task windowsZip(type: Copy) {
+    dependsOn userStaticZip
+    destinationDir = file("${setupDir}/output")
 
-build.dependsOn javaSourceJar
-build.dependsOn javaJavadocJar
-build.dependsOn userStaticZip
-build.dependsOn cppSources
-if (useDriver) {
-    build.dependsOn driverSources
+    from (userStaticZip.outputs.files.singleFile) {
+        rename("(.*).zip", "WPINIVisionWrapper_${(WPILibVersion.version).replace(".", "_")}.zip") 
+    }
+}
+
+// https://github.com/syncany/syncany/tree/master/gradle/innosetup
+// Skeleton code found here
+task installer() {
+    dependsOn copyForSetup
+
+    doLast {
+        delete "${setupDir}/setup.iss"
+
+        copy {
+            from("${rootDir}/setup.iss.skel")
+            rename("setup.iss.skel", "setup.iss")
+            expand([
+            applicationVersion: "${WPILibVersion.version}"
+            ])
+            into(setupDir)
+        }
+
+        exec {
+            workingDir rootDir
+            commandLine "iscc ${setupDir}/setup.iss".split()
+        }
+    }
 }

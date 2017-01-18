@@ -16,7 +16,6 @@ def cppSetupModel = { project ->
 
                 binaries.all {
                     tasks.withType(CppCompile) {
-                        addUserLinks(linker, targetPlatform, false)
                         addHalLibraryLinks(it, linker, targetPlatform)
                         addWpiUtilLibraryLinks(it, linker, targetPlatform)
                     }
